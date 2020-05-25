@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"example/components"
+	"example/tic_tac_toe_app/components"
 )
 
 type BoardService struct {

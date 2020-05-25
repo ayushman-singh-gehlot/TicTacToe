@@ -1,8 +1,8 @@
 package main
 
 import (
-	"example/components"
-	"example/service"
+	"example/tic_tac_toe_app/components"
+	"example/tic_tac_toe_app/service"
 	"fmt"
 )
 
