@@ -1,22 +1,31 @@
 package service
 
 import (
-	"example/components"
 	"fmt"
+
+	"github.com/ayushman-singh-gehlot/TicTacToe/components"
 )
 
-func (b *components.Board) MarkCell(index uint8, mark string) error {
-	err := b.boardCells[index].SetMark(mark)
+type BoardService struct {
+	*components.Board
+}
+
+func NewBoardService(size uint8) *BoardService {
+	return &BoardService{components.CreateBoard(size)}
+}
+
+func (b *BoardService) MarkCell(index uint8, mark string) error {
+	err := b.Board.BoardCells[index].SetMark(mark)
 	return err
 }
 
-func (b *components.Board) DisplayBoard() string {
+func (b *BoardService) DisplayBoard() string {
 	tempStr := ""
-	for i := uint8(0); i < (b.size * b.size); i++ {
-		if i%b.size == 0 {
+	for i := uint8(0); i < (b.Board.Size * b.Board.Size); i++ {
+		if i%b.Board.Size == 0 {
 			tempStr = tempStr + fmt.Sprint("\n\t")
 		}
-		tempStr = tempStr + fmt.Sprint(b.boardCells[i].GetMark(), " ")
+		tempStr = tempStr + fmt.Sprint(b.Board.BoardCells[i].GetMark(), " ")
 	}
 	return tempStr
 }

@@ -27,5 +27,5 @@ func (c *Cell) SetMark(mark string) error {
 }
 
 func (c *Cell) GetMark() string {
-	return cell.mark
+	return c.mark
 }
