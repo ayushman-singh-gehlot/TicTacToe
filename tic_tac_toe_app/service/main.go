@@ -4,11 +4,12 @@ import (
 	"fmt"
 
 	"github.com/ayushman-singh-gehlot/TicTacToe/tic_tac_toe_app/components"
+	"github.com/ayushman-singh-gehlot/TicTacToe/tic_tac_toe_app/service"
 )
 
 func main() {
-	var board1 *components.Board
-	board1 = components.CreateBoard(3)
-	fmt.Println(board1)
+	board1 := service.NewBoardService(3)
+	board1.MarkCell(0, components.XMark)
+	fmt.Println(board1.DisplayBoard())
 
 }
