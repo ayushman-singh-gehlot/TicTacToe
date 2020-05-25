@@ -51,3 +51,28 @@ func TestGetMark(t *testing.T) {
 	}
 
 }
+
+func TestCreateBoard(t *testing.T) {
+	tests := []struct {
+		input1    int
+		expected  int
+		expected1 string
+	}{
+		{2, 4, NoMark},
+		{3, 9, NoMark},
+		{4, 16, NoMark},
+	}
+	for _, test := range tests {
+		actual := CreateBoard(test.input1)
+		if len(actual) != test.expected {
+			t.Error(len(actual), test.expected)
+		}
+		for _, cell := range actual {
+			if cell.mark != test.expected1 {
+				t.Error(actual, test.expected1)
+			}
+
+		}
+	}
+
+}

@@ -9,7 +9,7 @@ type Cell struct {
 }
 
 const (
-	NoMark = " "
+	NoMark = "-"
 	XMark  = "X"
 	OMark  = "O"
 )
@@ -18,14 +18,14 @@ func NewCell() *Cell {
 	return &Cell{mark: NoMark}
 }
 
-func SetMark(cell *Cell, mark string) error {
-	if cell.mark == NoMark {
-		cell.mark = mark
+func (c *Cell) SetMark(mark string) error {
+	if c.mark == NoMark {
+		c.mark = mark
 		return nil
 	}
 	return errors.New("cell is already marked ")
 }
 
-func GetMark(cell *Cell) string {
+func (c *Cell) GetMark() string {
 	return cell.mark
 }
