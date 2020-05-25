@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"github.com/ayushman-singh-gehlot/TicTacToe/components"
+	"example/components"
 )
 
 type BoardService struct {

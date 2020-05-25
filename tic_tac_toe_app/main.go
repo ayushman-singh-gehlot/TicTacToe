@@ -1,10 +1,9 @@
 package main
 
 import (
+	"example/components"
+	"example/service"
 	"fmt"
-
-	"github.com/ayushman-singh-gehlot/TicTacToe/components"
-	"github.com/ayushman-singh-gehlot/TicTacToe/service"
 )
 
 func main() {
