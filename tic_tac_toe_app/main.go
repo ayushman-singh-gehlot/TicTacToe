@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/ayushman-singh-gehlot/TicTacToe/tic_tac_toe_app/components"
-	"github.com/ayushman-singh-gehlot/TicTacToe/tic_tac_toe_app/service"
+	"github.com/ayushman-singh-gehlot/TicTacToe/components"
+	"github.com/ayushman-singh-gehlot/TicTacToe/service"
 )
 
 func main() {
