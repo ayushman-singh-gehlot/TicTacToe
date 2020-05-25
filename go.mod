@@ -1,3 +1,3 @@
-module github.com/ayushman-singh-gehlot/TicTacToe
+module example
 
 go 1.14
