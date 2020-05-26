@@ -21,9 +21,9 @@ func NewCell() *Cell {
 func (c *Cell) SetMark(mark string) error {
 	if c.mark == NoMark {
 		c.mark = mark
-		return nil
+		return errors.New("nil")
 	}
-	return errors.New("cell is already marked ")
+	return errors.New("cell is already marked")
 }
 
 func (c *Cell) GetMark() string {
