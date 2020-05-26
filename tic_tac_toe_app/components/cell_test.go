@@ -8,8 +8,8 @@ import (
 func TestNewCell(t *testing.T) {
 	test := NewCell()
 	expected := NoMark
-	if test.mark != expected {
-		t.Error(test.mark, expected)
+	if test.Mark != expected {
+		t.Error(test.Mark, expected)
 	}
 }
 
@@ -19,9 +19,9 @@ func TestSetMark(t *testing.T) {
 		input2   string
 		expected error
 	}{
-		{&Cell{mark: NoMark}, XMark, nil},
-		{&Cell{mark: XMark}, OMark, errors.New("cell is already marked")},
-		{&Cell{mark: OMark}, NoMark, errors.New("cell is already marked")},
+		{&Cell{Mark: NoMark}, XMark, nil},
+		{&Cell{Mark: XMark}, OMark, errors.New("cell is already marked")},
+		{&Cell{Mark: OMark}, NoMark, errors.New("cell is already marked")},
 	}
 	for _, test := range tests {
 		actual := test.input1.SetMark(test.input2)
@@ -38,9 +38,9 @@ func TestGetMark(t *testing.T) {
 		input1   *Cell
 		expected string
 	}{
-		{&Cell{mark: NoMark}, NoMark},
-		{&Cell{mark: OMark}, OMark},
-		{&Cell{mark: XMark}, XMark},
+		{&Cell{Mark: NoMark}, NoMark},
+		{&Cell{Mark: OMark}, OMark},
+		{&Cell{Mark: XMark}, XMark},
 	}
 	for _, test := range tests {
 		actual := test.input1.GetMark()

@@ -5,7 +5,7 @@ import (
 )
 
 type Cell struct {
-	mark string
+	Mark string
 }
 
 const (
@@ -15,17 +15,17 @@ const (
 )
 
 func NewCell() *Cell {
-	return &Cell{mark: NoMark}
+	return &Cell{Mark: NoMark}
 }
 
 func (c *Cell) SetMark(mark string) error {
-	if c.mark == NoMark {
-		c.mark = mark
+	if c.Mark == NoMark {
+		c.Mark = mark
 		return nil
 	}
 	return errors.New("cell is already marked")
 }
 
 func (c *Cell) GetMark() string {
-	return c.mark
+	return c.Mark
 }

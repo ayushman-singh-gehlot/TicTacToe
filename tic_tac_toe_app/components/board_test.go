@@ -18,7 +18,7 @@ func TestCreateBoard(t *testing.T) {
 			t.Error(len(actual.BoardCells), test.expected)
 		}
 		for _, cell := range actual.BoardCells {
-			if cell.mark != test.expected1 {
+			if cell.Mark != test.expected1 {
 				t.Error(actual, test.expected1)
 			}
 
