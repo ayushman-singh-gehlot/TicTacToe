@@ -19,14 +19,16 @@ func TestSetMark(t *testing.T) {
 		input2   string
 		expected error
 	}{
-		{&Cell{mark: NoMark}, XMark, errors.New("nil")},
+		{&Cell{mark: NoMark}, XMark, nil},
 		{&Cell{mark: XMark}, OMark, errors.New("cell is already marked")},
 		{&Cell{mark: OMark}, NoMark, errors.New("cell is already marked")},
 	}
 	for _, test := range tests {
 		actual := test.input1.SetMark(test.input2)
-		if actual.Error() != test.expected.Error() {
-			t.Error(actual, test.expected)
+		if actual != nil {
+			if actual.Error() != test.expected.Error() {
+				t.Error(actual, test.expected)
+			}
 		}
 	}
 }

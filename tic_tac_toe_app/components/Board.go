@@ -6,12 +6,14 @@ type Board struct {
 }
 
 func CreateBoard(size uint8) *Board {
-	var board Board
-	board.Size = size
-	for i := 0; i < int(board.Size*board.Size); i++ {
-		board.BoardCells = append(board.BoardCells, NewCell())
+	tempcells := make([]*Cell, size*size)
+	for i := 0; i < int(size*size); i++ {
+		tempcells[i] = NewCell()
 	}
-	return &board
+	return &Board{
+		Size:       size,
+		BoardCells: tempcells,
+	}
 }
 
 // func SetBoardCell(index uint8, mark string) {
