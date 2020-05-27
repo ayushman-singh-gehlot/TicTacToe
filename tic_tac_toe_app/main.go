@@ -7,8 +7,13 @@ import (
 )
 
 func main() {
-	temp := service.NewBoardService(3)
-	temp.MarkCell(0, components.XMark)
-	temp.MarkCell(3, components.OMark)
-	fmt.Println(temp.DisplayBoard())
+	temp := components.CreateBoard(3)
+	boardServiceObj := service.NewBoardService(temp)
+	player1 := components.NewPlayer("ayushman", components.XMark)
+	player2 := components.NewPlayer("fardin", components.OMark)
+	boardServiceObj.PutMarkInPosition(player1, 4)
+	fmt.Println(boardServiceObj.PrintBoard())
+	boardServiceObj.PutMarkInPosition(player2, 3)
+	fmt.Println(boardServiceObj.PrintBoard())
+
 }

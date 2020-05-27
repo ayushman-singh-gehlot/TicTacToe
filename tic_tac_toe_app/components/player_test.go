@@ -14,7 +14,7 @@ func TestNewPlayer(t *testing.T) {
 	}
 	for _, test := range tests {
 		temp := NewPlayer(test.input1, test.input2)
-		if temp.name != test.expected1 || temp.mark != test.expected2 {
+		if temp.Name != test.expected1 || temp.Mark != test.expected2 {
 			t.Error(temp, test.expected1, test.expected2)
 		}
 	}
