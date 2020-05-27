@@ -6,38 +6,14 @@ import (
 	"testing"
 )
 
-func TestNewServiceBoard(t *testing.T) {
-	tests := []struct {
-		input1    uint8
-		expected  uint8
-		expected1 string
-	}{
-		{2, 4, components.NoMark},
-		{3, 9, components.NoMark},
-		{4, 16, components.NoMark},
-	}
-	for _, test := range tests {
-		actual := NewBoardService(test.input1)
-		if len(actual.BoardCells) != int(test.expected) {
-			t.Error(len(actual.BoardCells), test.expected)
-		}
-		for _, cell := range actual.BoardCells {
-			if cell.Mark != test.expected1 {
-				t.Error(actual, test.expected1)
-			}
-
-		}
-	}
-}
-
 func TestPutMarkInPosition(t *testing.T) {
 	tests := []struct {
 		input1   *BoardService
 		index    uint8
-		mark     string
+		player   *components.Player
 		expected error
 	}{
-		{&BoardService{components.CreateBoard(3)}, 0, components.OMark, nil},
+		{&BoardService{components.CreateBoard(3)}, 0, &components.Player{Name: "ayushman", Mark: components.OMark}, nil},
 		{&BoardService{&components.Board{
 			Size: 2,
 			BoardCells: []*components.Cell{
@@ -47,10 +23,10 @@ func TestPutMarkInPosition(t *testing.T) {
 				&components.Cell{Mark: components.XMark},
 			},
 		},
-		}, 0, components.XMark, errors.New("cell is already marked")},
+		}, 0, &components.Player{Name: "fardin", Mark: components.XMark}, errors.New("cell is already marked")},
 	}
 	for _, test := range tests {
-		actual := test.input1.PutMarkInPosition(test.index, test.mark)
+		actual := test.input1.PutMarkInPosition(test.player, test.index)
 		if actual != nil {
 			if actual.Error() != test.expected.Error() {
 				t.Error(actual, test.expected)

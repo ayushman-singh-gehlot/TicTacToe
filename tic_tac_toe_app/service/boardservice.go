@@ -10,12 +10,12 @@ type BoardService struct {
 	*components.Board
 }
 
-func NewBoardService(size uint8) *BoardService {
-	return &BoardService{components.CreateBoard(size)}
+func NewBoardService(board *components.Board) *BoardService {
+	return &BoardService{board}
 }
 
-func (b *BoardService) PutMarkInPosition(index uint8, mark string) error {
-	err := b.BoardCells[index].SetMark(mark)
+func (b *BoardService) PutMarkInPosition(player *components.Player, position uint8) error {
+	err := b.BoardCells[position].SetMark(player.Mark)
 	return err
 }
 
