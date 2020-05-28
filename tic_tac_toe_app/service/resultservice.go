@@ -7,6 +7,10 @@ import (
 type ResultService struct {
 	*BoardService
 }
+type Result struct {
+	winBool  bool
+	drawBool bool
+}
 
 func NewResultService(boardService *BoardService) *ResultService {
 	return &ResultService{boardService}
@@ -53,16 +57,16 @@ func (rs *ResultService) checkDiagonal(mark string) bool {
 	return ret
 }
 
-func (rs *ResultService) Result(player *components.Player, pos uint8) (bool, string) {
+func (rs *ResultService) GetResult(player *components.Player, pos uint8) Result {
 
 	if rs.checkRows(player.Mark, pos) {
-		return true, "win"
+		return Result{true, false}
 	} else if rs.checkColumns(player.Mark, pos) {
-		return true, "win"
+		return Result{true, false}
 	} else if rs.checkDiagonal(player.Mark) {
-		return true, "win"
+		return Result{true, false}
 	} else if rs.CheckBoardIsFull() {
-		return true, "Draw"
+		return Result{false, true}
 	}
-	return false, "Inprogress"
+	return Result{false, false}
 }
