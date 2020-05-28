@@ -1,6 +1,8 @@
 package service
 
-import "example/tic_tac_toe_app/components"
+import (
+	"example/tic_tac_toe_app/components"
+)
 
 type ResultService struct {
 	*BoardService
@@ -10,41 +12,32 @@ func NewResultService(boardService *BoardService) *ResultService {
 	return &ResultService{boardService}
 }
 
-func checkRows(b *components.Board, mark string) bool {
+func (rs *ResultService) checkRows(mark string, pos uint8) bool {
 	ret := true
-	for i := uint8(0); i < (b.Size * b.Size); i = i + b.Size {
-		ret = true
-		for j := i; j < (i + b.Size); j++ {
-			if b.BoardCells[j].GetMark() != mark {
-				ret = false
-			}
-		}
-		if ret {
-			return ret
+	i := (pos - pos%rs.Size)
+	//fmt.Printf("checking row %d", i/rs.Size+1)
+	for j := i; j < (i + rs.Size); j++ {
+		if rs.BoardCells[j].GetMark() != mark {
+			ret = false
 		}
 	}
 	return ret
 }
 
-func checkColumns(b *components.Board, mark string) bool {
+func (rs *ResultService) checkColumns(mark string, pos uint8) bool {
 	ret := true
-	for i := uint8(0); i < b.Size; i++ {
-		ret = true
-		for j := i; j < (b.Size * b.Size); j = j + b.Size {
-			if b.BoardCells[j].GetMark() != mark {
-				ret = false
-			}
-		}
-		if ret {
-			return ret
+	//fmt.Printf("checking column %d", pos%rs.Size+1)
+	for j := pos % rs.Size; j < (rs.Size * rs.Size); j = j + rs.Size {
+		if rs.BoardCells[j].GetMark() != mark {
+			ret = false
 		}
 	}
 	return ret
 }
-func checkDiagonal(b *components.Board, mark string) bool {
+func (rs *ResultService) checkDiagonal(mark string) bool {
 	ret := true
-	for i := uint8(0); i < b.Size; i++ {
-		if b.BoardCells[b.Size*i+i].GetMark() != mark {
+	for i := uint8(0); i < rs.Size; i++ {
+		if rs.BoardCells[rs.Size*i+i].GetMark() != mark {
 			ret = false
 		}
 	}
@@ -52,23 +45,23 @@ func checkDiagonal(b *components.Board, mark string) bool {
 		return ret
 	}
 	ret = true
-	for i := uint8(0); i < b.Size; i++ {
-		if b.BoardCells[(b.Size*i)+(b.Size-1-i)].GetMark() != mark {
+	for i := uint8(0); i < rs.Size; i++ {
+		if rs.BoardCells[(rs.Size*i)+(rs.Size-1-i)].GetMark() != mark {
 			ret = false
 		}
 	}
 	return ret
 }
 
-func (b *ResultService) Result(player *components.Player) (bool, string) {
+func (rs *ResultService) Result(player *components.Player, pos uint8) (bool, string) {
 
-	if checkRows(b.Board, player.Mark) {
+	if rs.checkRows(player.Mark, pos) {
 		return true, "win"
-	} else if checkColumns(b.Board, player.Mark) {
+	} else if rs.checkColumns(player.Mark, pos) {
 		return true, "win"
-	} else if checkDiagonal(b.Board, player.Mark) {
+	} else if rs.checkDiagonal(player.Mark) {
 		return true, "win"
-	} else if b.CheckBoardIsFull() {
+	} else if rs.CheckBoardIsFull() {
 		return true, "Draw"
 	}
 	return false, "Inprogress"

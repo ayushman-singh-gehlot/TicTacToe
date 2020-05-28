@@ -8,11 +8,12 @@ import (
 
 func TestCheckRows(t *testing.T) {
 	tests := []struct {
-		input    *components.Board
+		input    *ResultService
 		input1   string
+		input2   uint8
 		expected bool
 	}{
-		{&components.Board{
+		{&ResultService{&BoardService{&components.Board{
 			Size: 2,
 			BoardCells: []*components.Cell{
 				{Mark: components.OMark},
@@ -20,9 +21,11 @@ func TestCheckRows(t *testing.T) {
 				{Mark: components.NoMark},
 				{Mark: components.XMark},
 			},
-		}, components.XMark, false},
+		},
+		},
+		}, components.XMark, 3, false},
 
-		{&components.Board{
+		{&ResultService{&BoardService{&components.Board{
 			Size: 3,
 			BoardCells: []*components.Cell{
 				{Mark: components.OMark},
@@ -35,23 +38,26 @@ func TestCheckRows(t *testing.T) {
 				{Mark: components.NoMark},
 				{Mark: components.OMark},
 			},
-		}, components.XMark, true},
+		},
+		},
+		}, components.XMark, 4, true},
 	}
 
 	for _, test := range tests {
-		if checkRows(test.input, test.input1) != test.expected {
+		if test.input.checkRows(test.input1, test.input2) != test.expected {
 			t.Error("check row failed")
 		}
 	}
 }
 
-func TestCheckColumn(t *testing.T) {
+func TestCheckColumns(t *testing.T) {
 	tests := []struct {
-		input    *components.Board
+		input    *ResultService
 		input1   string
+		input2   uint8
 		expected bool
 	}{
-		{&components.Board{
+		{&ResultService{&BoardService{&components.Board{
 			Size: 2,
 			BoardCells: []*components.Cell{
 				{Mark: components.OMark},
@@ -59,9 +65,11 @@ func TestCheckColumn(t *testing.T) {
 				{Mark: components.NoMark},
 				{Mark: components.XMark},
 			},
-		}, components.XMark, true},
+		},
+		},
+		}, components.XMark, 3, true},
 
-		{&components.Board{
+		{&ResultService{&BoardService{&components.Board{
 			Size: 3,
 			BoardCells: []*components.Cell{
 				{Mark: components.OMark},
@@ -74,11 +82,13 @@ func TestCheckColumn(t *testing.T) {
 				{Mark: components.NoMark},
 				{Mark: components.OMark},
 			},
-		}, components.XMark, false},
+		},
+		},
+		}, components.XMark, 5, false},
 	}
 
 	for _, test := range tests {
-		if checkColumns(test.input, test.input1) != test.expected {
+		if test.input.checkColumns(test.input1, test.input2) != test.expected {
 			t.Error("check column failed")
 		}
 	}
@@ -86,11 +96,11 @@ func TestCheckColumn(t *testing.T) {
 
 func TestCheckDiagonal(t *testing.T) {
 	tests := []struct {
-		input    *components.Board
+		input    *ResultService
 		input1   string
 		expected bool
 	}{
-		{&components.Board{
+		{&ResultService{&BoardService{&components.Board{
 			Size: 2,
 			BoardCells: []*components.Cell{
 				{Mark: components.OMark},
@@ -98,9 +108,11 @@ func TestCheckDiagonal(t *testing.T) {
 				{Mark: components.XMark},
 				{Mark: components.NoMark},
 			},
+		},
+		},
 		}, components.XMark, true},
 
-		{&components.Board{
+		{&ResultService{&BoardService{&components.Board{
 			Size: 3,
 			BoardCells: []*components.Cell{
 				{Mark: components.OMark},
@@ -113,12 +125,14 @@ func TestCheckDiagonal(t *testing.T) {
 				{Mark: components.NoMark},
 				{Mark: components.OMark},
 			},
+		},
+		},
 		}, components.OMark, true},
 	}
 
 	for _, test := range tests {
-		if checkDiagonal(test.input, test.input1) != test.expected {
-			t.Error("check diagonal failed")
+		if test.input.checkDiagonal(test.input1) != test.expected {
+			t.Error(test, "check diagonal failed")
 		}
 	}
 }
