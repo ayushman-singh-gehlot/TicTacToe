@@ -2,6 +2,14 @@ package service
 
 import "example/tic_tac_toe_app/components"
 
+type ResultService struct {
+	*BoardService
+}
+
+func NewResultService(boardService *BoardService) *ResultService {
+	return &ResultService{boardService}
+}
+
 func checkRows(b *components.Board, mark string) bool {
 	ret := true
 	for i := uint8(0); i < (b.Size * b.Size); i = i + b.Size {
@@ -52,7 +60,7 @@ func checkDiagonal(b *components.Board, mark string) bool {
 	return ret
 }
 
-func (b *BoardService) Result(player *components.Player) (bool, string) {
+func (b *ResultService) Result(player *components.Player) (bool, string) {
 
 	if checkRows(b.Board, player.Mark) {
 		return true, "win"
