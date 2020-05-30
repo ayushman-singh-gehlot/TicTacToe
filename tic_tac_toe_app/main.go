@@ -12,31 +12,6 @@ import (
 	"strings"
 )
 
-func getUint8(numstring string) (uint8, error) {
-	numstring = strings.TrimSpace(numstring)
-	num, err := strconv.Atoi(numstring)
-	if err != nil {
-		return 0, errors.New("please enter integer")
-	}
-	return uint8(num), nil
-}
-
-func checkerror(err error) bool {
-	if err != nil {
-		log.Fatal(err)
-		return true
-	}
-	return false
-}
-
-func checkWarning(err error) bool {
-	if err != nil {
-		fmt.Println("Warning : ", err)
-		return true
-	}
-	return false
-}
-
 func main() {
 
 	// select board size
@@ -67,7 +42,7 @@ func main() {
 	var player1 *components.Player
 	fmt.Println("Enter name of first player : ")
 	p1Name, err := readobj.ReadString('\n')
-	checkWarning(err)
+	checkerror(err)
 	p1Name = strings.TrimSpace(p1Name)
 	for {
 		fmt.Println("select your mark X or O : ")
@@ -89,7 +64,7 @@ func main() {
 	var player2 *components.Player
 	fmt.Println("Enter name of second player : ")
 	p2Name, err := readobj.ReadString('\n')
-	checkWarning(err)
+	checkerror(err)
 	p2Name = strings.TrimSpace(p2Name)
 	p2Mark := ""
 	if player1.Mark == components.OMark {
@@ -164,4 +139,26 @@ func main() {
 
 	}
 
+}
+func getUint8(numstring string) (uint8, error) {
+	numstring = strings.TrimSpace(numstring)
+	num, err := strconv.Atoi(numstring)
+	if err != nil {
+		return 0, errors.New("please enter integer")
+	}
+	return uint8(num), nil
+}
+
+func checkerror(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func checkWarning(err error) bool {
+	if err != nil {
+		fmt.Println("Warning : ", err)
+		return true
+	}
+	return false
 }
