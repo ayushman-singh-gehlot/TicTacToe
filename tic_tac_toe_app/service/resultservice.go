@@ -8,8 +8,8 @@ type ResultService struct {
 	*BoardService
 }
 type Result struct {
-	win  bool
-	draw bool
+	Win  bool
+	Draw bool
 }
 
 func NewResultService(boardService *BoardService) *ResultService {
