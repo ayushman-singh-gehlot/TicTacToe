@@ -17,10 +17,11 @@ func main() {
 	// select board size
 	readobj := bufio.NewReader(os.Stdin)
 	var board *components.Board
+	fmt.Print("\n\n------------------------TIC TAC TOE------------------------\n\n")
 	fmt.Print("select board size\n\n2 for 2 X 2\n3 for 3 X 3\n4 for 4 X 4\n\n")
 
 	for {
-		fmt.Print("enter number : ")
+		fmt.Println("enter number : ")
 		inp, err := readobj.ReadString('\n')
 		if checkWarning(err) {
 			continue
@@ -62,10 +63,18 @@ func main() {
 	//enter player2
 
 	var player2 *components.Player
-	fmt.Println("Enter name of second player : ")
-	p2Name, err := readobj.ReadString('\n')
-	checkerror(err)
-	p2Name = strings.TrimSpace(p2Name)
+	p2Name := ""
+	for {
+		fmt.Println("Enter name of second player : ")
+		p2Name, err = readobj.ReadString('\n')
+		checkerror(err)
+		p2Name = strings.TrimSpace(p2Name)
+		if p2Name == player1.Name {
+			checkWarning(errors.New("player name is already taken"))
+			continue
+		}
+		break
+	}
 	p2Mark := ""
 	if player1.Mark == components.OMark {
 		p2Mark = components.XMark
@@ -88,11 +97,12 @@ func main() {
 	gameserviceObj := service.NewGameService(resultserviceObj, [2]*components.Player{player1, player2})
 
 	//game starts
-
+	fmt.Println("-----------------------Game Starts------------------------")
+	fmt.Println(gameserviceObj.PrintBoard())
 	for {
 		var res service.Result
 		for {
-			fmt.Println(player1.Name, "enter your pos :")
+			fmt.Print(player1.Name, " enter your pos : ")
 			inp, err := readobj.ReadString('\n')
 			checkerror(err)
 			pos, err := getUint8(inp)
@@ -107,15 +117,17 @@ func main() {
 		}
 		fmt.Println(gameserviceObj.PrintBoard())
 		if res.Win == true {
-			fmt.Printf("--------------------%s Won--------------------", player1.Name)
+			fmt.Print(res.CurrResult)
+			//fmt.Printf("--------------------%s Won--------------------", player1.Name)
 			break
 		} else if res.Draw == true {
-			fmt.Println("--------------------Draw--------------------")
+			fmt.Print(res.CurrResult)
+			//fmt.Println("--------------------Draw--------------------")
 			break
 		}
 
 		for {
-			fmt.Println(player2.Name, " enter your pos :")
+			fmt.Print(player2.Name, " enter your pos : ")
 			inp, err := readobj.ReadString('\n')
 			checkerror(err)
 			pos, err := getUint8(inp)
@@ -130,16 +142,19 @@ func main() {
 		}
 		fmt.Println(gameserviceObj.PrintBoard())
 		if res.Win == true {
-			fmt.Printf("--------------------%s Won--------------------", player2.Name)
+			fmt.Print(res.CurrResult)
+			//fmt.Printf("--------------------%s Won--------------------", player2.Name)
 			break
 		} else if res.Draw == true {
-			fmt.Println("--------------------Draw--------------------")
+			fmt.Print(res.CurrResult)
+			//fmt.Println("--------------------Draw--------------------")
 			break
 		}
 
 	}
 
 }
+
 func getUint8(numstring string) (uint8, error) {
 	numstring = strings.TrimSpace(numstring)
 	num, err := strconv.Atoi(numstring)
@@ -149,13 +164,13 @@ func getUint8(numstring string) (uint8, error) {
 	return uint8(num), nil
 }
 
-func checkerror(err error) {
+func checkerror(err error) { // checkerror and terminates the program
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func checkWarning(err error) bool {
+func checkWarning(err error) bool { // checkerror and print if any
 	if err != nil {
 		fmt.Println("Warning : ", err)
 		return true

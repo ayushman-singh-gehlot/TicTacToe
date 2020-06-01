@@ -20,14 +20,36 @@ func (b *BoardService) PutMarkInPosition(player *components.Player, position uin
 }
 
 func (b *BoardService) PrintBoard() string {
+
 	tempStr := ""
 	for i := uint8(0); i < (b.Size * b.Size); i++ {
-		if i%b.Board.Size == 0 {
+		if i%b.Size == 0 {
 			tempStr = tempStr + fmt.Sprint("\n\t")
 		}
-		tempStr = tempStr + fmt.Sprint(b.BoardCells[i].GetMark(), " ")
+		if i >= b.Size*(b.Size-1) {
+			if i%b.Size == (b.Size - 1) {
+				tempStr += fmt.Sprintf("  %s  ", b.BoardCells[i].GetMark())
+			} else {
+				tempStr += fmt.Sprintf("  %s  |", b.BoardCells[i].GetMark())
+			}
+		} else {
+			if i%b.Size == (b.Size - 1) {
+				tempStr += fmt.Sprintf("__%s__", b.BoardCells[i].GetMark())
+			} else {
+				tempStr += fmt.Sprintf("__%s__|", b.BoardCells[i].GetMark())
+			}
+		}
 	}
+	tempStr += fmt.Sprint("\n")
 	return tempStr
+
+	// for i := uint8(0); i < (b.Size * b.Size); i++ {
+	// 	if i%b.Board.Size == 0 {
+	// 		tempStr = tempStr + fmt.Sprint("\n\t")
+	// 	}
+	// 	tempStr = tempStr + fmt.Sprint(b.BoardCells[i].GetMark(), " ")
+	// }
+	// return tempStr
 }
 
 func (b *BoardService) CheckBoardIsFull() bool {

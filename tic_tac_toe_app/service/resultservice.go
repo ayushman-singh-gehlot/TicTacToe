@@ -8,8 +8,9 @@ type ResultService struct {
 	*BoardService
 }
 type Result struct {
-	Win  bool
-	Draw bool
+	CurrResult string
+	Win        bool
+	Draw       bool
 }
 
 func NewResultService(boardService *BoardService) *ResultService {
@@ -57,16 +58,35 @@ func (rs *ResultService) checkDiagonal(mark string) bool {
 	return ret
 }
 
+func (rs *ResultService) PrintResultStat(stat string) string {
+	retString := ""
+
+	for i := 0; i < 3; i++ {
+		retString += "\n\t"
+		for j := 0; j < len(stat)+6; j++ {
+			if i == 0 || i == 2 {
+				retString += "-"
+			}
+		}
+		if i == 1 {
+			retString += "|  " + stat + "  |"
+		}
+	}
+	retString += "\n"
+	return retString
+
+}
+
 func (rs *ResultService) GetResult(player *components.Player, pos uint8) Result {
 
 	if rs.checkRows(player.Mark, pos) {
-		return Result{true, false}
+		return Result{rs.PrintResultStat(player.Name + " Won"), true, false}
 	} else if rs.checkColumns(player.Mark, pos) {
-		return Result{true, false}
+		return Result{rs.PrintResultStat(player.Name + " Won"), true, false}
 	} else if rs.checkDiagonal(player.Mark) {
-		return Result{true, false}
+		return Result{rs.PrintResultStat(player.Name + " Won"), true, false}
 	} else if rs.CheckBoardIsFull() {
-		return Result{false, true}
+		return Result{rs.PrintResultStat("Draw"), false, true}
 	}
-	return Result{false, false}
+	return Result{"", false, false}
 }

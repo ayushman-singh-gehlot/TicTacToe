@@ -17,10 +17,10 @@ func TestPutMarkInPosition(t *testing.T) {
 		{&BoardService{&components.Board{
 			Size: 2,
 			BoardCells: []*components.Cell{
-				&components.Cell{Mark: components.OMark},
-				&components.Cell{Mark: components.XMark},
-				&components.Cell{Mark: components.NoMark},
-				&components.Cell{Mark: components.XMark},
+				{Mark: components.OMark},
+				{Mark: components.XMark},
+				{Mark: components.NoMark},
+				{Mark: components.XMark},
 			},
 		},
 		}, 0, &components.Player{Name: "fardin", Mark: components.XMark}, errors.New("cell is already marked")},
@@ -44,10 +44,10 @@ func TestPrintBoard(t *testing.T) {
 		{&BoardService{&components.Board{
 			Size: 2,
 			BoardCells: []*components.Cell{
-				&components.Cell{Mark: components.OMark},
-				&components.Cell{Mark: components.XMark},
-				&components.Cell{Mark: components.NoMark},
-				&components.Cell{Mark: components.XMark},
+				{Mark: components.OMark},
+				{Mark: components.XMark},
+				{Mark: components.NoMark},
+				{Mark: components.XMark},
 			},
 		},
 		}, "\n\tO X \n\t- X "},
@@ -69,10 +69,10 @@ func TestCheckBoardIsFull(t *testing.T) {
 		{&BoardService{&components.Board{
 			Size: 2,
 			BoardCells: []*components.Cell{
-				&components.Cell{Mark: components.OMark},
-				&components.Cell{Mark: components.XMark},
-				&components.Cell{Mark: components.OMark},
-				&components.Cell{Mark: components.XMark},
+				{Mark: components.OMark},
+				{Mark: components.XMark},
+				{Mark: components.OMark},
+				{Mark: components.XMark},
 			},
 		},
 		}, true},
