@@ -58,18 +58,18 @@ func (rs *ResultService) checkDiagonal(mark string) bool {
 	return ret
 }
 
-func (rs *ResultService) PrintResultStat(stat string) string {
+func (rs *ResultService) PrintResult(resultStat string) string {
 	retString := ""
 
 	for i := 0; i < 3; i++ {
 		retString += "\n\t"
-		for j := 0; j < len(stat)+6; j++ {
+		for j := 0; j < len(resultStat)+6; j++ {
 			if i == 0 || i == 2 {
 				retString += "-"
 			}
 		}
 		if i == 1 {
-			retString += "|  " + stat + "  |"
+			retString += "|  " + resultStat + "  |"
 		}
 	}
 	retString += "\n"
@@ -79,14 +79,10 @@ func (rs *ResultService) PrintResultStat(stat string) string {
 
 func (rs *ResultService) GetResult(player *components.Player, pos uint8) Result {
 
-	if rs.checkRows(player.Mark, pos) {
-		return Result{rs.PrintResultStat(player.Name + " Won"), true, false}
-	} else if rs.checkColumns(player.Mark, pos) {
-		return Result{rs.PrintResultStat(player.Name + " Won"), true, false}
-	} else if rs.checkDiagonal(player.Mark) {
-		return Result{rs.PrintResultStat(player.Name + " Won"), true, false}
+	if rs.checkRows(player.Mark, pos) || rs.checkColumns(player.Mark, pos) || rs.checkDiagonal(player.Mark) {
+		return Result{rs.PrintResult(player.Name + " Won"), true, false}
 	} else if rs.CheckBoardIsFull() {
-		return Result{rs.PrintResultStat("Draw"), false, true}
+		return Result{rs.PrintResult("Draw"), false, true}
 	}
 	return Result{"", false, false}
 }
