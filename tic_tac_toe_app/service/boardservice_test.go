@@ -40,7 +40,7 @@ func TestPrintBoard(t *testing.T) {
 		input1   *BoardService
 		expected string
 	}{
-		{&BoardService{components.CreateBoard(3)}, "\n\t- - - \n\t- - - \n\t- - - "},
+		{&BoardService{components.CreateBoard(3)}, "\n\t__-__|__-__|__-__\n\t__-__|__-__|__-__\n\t  -  |  -  |  -  \n"},
 		{&BoardService{&components.Board{
 			Size: 2,
 			BoardCells: []*components.Cell{
@@ -50,7 +50,7 @@ func TestPrintBoard(t *testing.T) {
 				{Mark: components.XMark},
 			},
 		},
-		}, "\n\tO X \n\t- X "},
+		}, "\n\t__O__|__X__\n\t  -  |  X  \n"},
 	}
 	for _, test := range tests {
 		actual := test.input1.PrintBoard()
